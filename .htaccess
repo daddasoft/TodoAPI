@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^([^/]+)/? index.php?url=$1 [L,QSA]
+RewriteRule ^add.php?$ ./add.php [L]
