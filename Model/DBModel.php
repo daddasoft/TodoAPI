@@ -17,6 +17,12 @@ class DB
         $data = $data->fetchAll();
         return $data;
     }
+     protected static function SelectWithoutParams($sql)
+    {
+        $data = self::connect()->query($sql);
+        $data = $data->fetchAll();
+        return $data;
+    }
     protected static function SelectSingle($sql, $prepare)
     {
         $data = self::connect()->prepare($sql);

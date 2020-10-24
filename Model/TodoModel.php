@@ -3,7 +3,7 @@ class Todo extends DB
 {
     public static function All($userID)
     {
-        $res = DB::Select("SELECT todoUID,Content,CreatedAt From todos Where CreatedByID =:userID ", [":userID" => $userID]);
+        $res = DB::Select("SELECT todoUID,Content,CreatedAt From todos Where CreatedByID =:userID  order by CreatedAt DESC", [":userID" => $userID]);
         return $res;
     }
     public static function save($userID, $Content)
@@ -31,5 +31,10 @@ class Todo extends DB
         $res = DB::Delete("DELETE from todos Where CreatedByID=:userID",
             [":userID" => $userID]);
         return $res;
+    }
+    public static function ShowIndex()
+    {
+        $res = DB::SelectWithoutParams("SELECT T.Content,T.CreatedAt,U.Username,U.CreatedAt as MemberSince FROM todos T join users U On U.UserID = T.CreatedByID order by T.CreatedByID");
+                return $res;
     }
 }

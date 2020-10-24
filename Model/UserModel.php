@@ -4,7 +4,7 @@ class User extends DB
 
     public static function Login($username)
     {
-        return DB::SelectSingle("SELECT `UserID`,`Password` FROM `users` WHERE `Username` = :username
+        return DB::SelectSingle("SELECT `UserID`,`Password`,username,email,CreatedAt FROM `users` WHERE `Username` = :username
                     OR `Email`= :email",
             [":username" => $username, ":email" => $username]);
 

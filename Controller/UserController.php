@@ -9,13 +9,17 @@ class UserController
         $res = User::Login($username);
         if ($res) {
             if (password_verify($password, $res["Password"])) {
-                return ["status" => true, "userID" => $res["UserID"]];
+                return [
+                    "status" => true,
+                    "data" => [
+                        "UserID" => $res["UserID"],
+                        "username" => $res["username"], "email" => $res["email"], "CreatedAt" => $res["CreatedAt"]
+                    ]
+                ];
             }
             return ["status" => false, "message" => "The Password Is Incorrect"];
-
         }
-        return ["status" => false, "message" => "User Can't Be Found"];
-
+        return ["status" => false, "message" => "username  or email Incorrect"];
     }
     public function RegisterController($username, $email, $password, $confirmPassword)
     {
@@ -47,7 +51,6 @@ class UserController
             }
             return ["status" => false, "message" => "Error While Creating The User"];
         }
-
     }
     public function GetPasswordCon($userID)
     {
@@ -76,5 +79,4 @@ class UserController
             }
         }
     }
-
 }

@@ -2,6 +2,11 @@
 $auth = new AuthController;
 $User = new UserController;
 $data = json_decode(file_get_contents("php://input"));
+$headers = apache_request_headers();
+if(!isset($headers['token'])){
+    exit(json_encode(["status"=>false,"message"=>"no token available"]));
+}
+$token = $headers['token'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($data->_token)) {
         exit(json_encode(["status" => false, "message" => "Authorization Required"]));
@@ -17,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($data->newPasswordConfirm)) {
         exit(json_encode(["status" => false, "message" => "Confirm New  Password"]));
     }
-    $token = htmlspecialchars($data->_token);
+    $token = htmlspecialchars($token);
     $res = $auth->ValidateToken($token);
     if ($res["status"]) {
         $userID = $res["userID"];

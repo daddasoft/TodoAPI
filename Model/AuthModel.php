@@ -20,7 +20,7 @@ class Auth extends DB
     }
     public static function GetToken($token)
     {
-        return DB::SelectSingle("SELECT ExpiredOn ,UserID FROM token WHERE Usertoken = :token", [":token" => $token]);
+        return DB::SelectSingle("SELECT ExpiredOn ,T.UserID,U.Username,U.Email,U.CreatedAt From token T JOIN users U On T.UserID = U.UserID WHERE T.Usertoken = :token", [":token" => $token]);
     }
 
 }

@@ -13,13 +13,15 @@ class TodoController
     public function AddTodo($userID, $content)
     {
         $content = htmlspecialchars(trim($content));
-        $res = Todo::save($userID, $content);
         if (strlen(trim($content)) < 5) {
+            http_response_code(400);
             return ["status" => false, "message" => "The Content Is To Short"];
         }
+        $res = Todo::save($userID, $content);
         if ($res->rowCount() > 0) {
             return ["status" => true, "message" => "Todo Has Been Added"];
         }
+        http_response_code(400);
         return ["status" => false, "message" => "Todo Can't Be Added"];
     }
     public function ModifyTodo($userID, $todoUID, $newContent)
@@ -49,5 +51,9 @@ class TodoController
             return ["status" => true, "message" => "Todo Has Been Cleared"];
         }
         return ["status" => false, "message" => "No Action Affected"];
+    }
+    public function Show(){
+        return Todo::ShowIndex();
+
     }
 }
