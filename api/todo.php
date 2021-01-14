@@ -6,10 +6,10 @@ $data = json_decode(file_get_contents("php://input"));
 
 $headers = apache_request_headers();
 print_r(apache_request_headers());
-if(!isset($headers['token'])){
+if(!isset($headers['Token'])){
     exit(json_encode(["status"=>false,"message"=>"no token available"]));
 }
-$token = $headers['token'];
+$token = $headers['Token'];
 $res = $auth->ValidateToken($token);
 if(!$res["status"]){
     exit(json_encode($res));
