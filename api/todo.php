@@ -2,8 +2,6 @@
 $auth = new AuthController;
 $todo = new TodoController;
 $data = json_decode(file_get_contents("php://input"));
-if (!function_exists('apache_request_headers')) {
-    ///
     function apache_request_headers()
     {
         $arh = array();
@@ -24,10 +22,9 @@ if (!function_exists('apache_request_headers')) {
         }
         return ($arh);
     }
-    ///
-}
 
 $headers = apache_request_headers();
+print_r(apache_request_headers());
 if(!isset($headers['token'])){
     exit(json_encode(["status"=>false,"message"=>"no token available"]));
 }
